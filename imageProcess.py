@@ -1,5 +1,4 @@
 # Import the necessary libraries
-from numba import jit, cuda
 from timeit import default_timer as timer   
 from PIL import Image
 from numpy import asarray
@@ -55,6 +54,7 @@ def ImageToMatrix(imageURL):
 
 #@jit(target_backend='cuda') 
 def detect(array,network):
+    print("network size: "+str(len(network)))
     labels = {}
     for x in range(len(array)):
         for y in range(len(array[x])):
@@ -67,7 +67,6 @@ def detect(array,network):
                         labels[lb] = 1
             except:
                 b = True
-
     return labels
 
 def insertdata(array,network,name):
@@ -106,7 +105,7 @@ def saveDasta(data):
 start = timer()
 f = open('./storage/data.json')
 data = json.load(f)
-print(detect(ImageToMatrix("./imgs/detect2.jpg"),data))
+print(detect(ImageToMatrix("./imgs/detect.jpg"),data))
 #train("./imgs/v0.jpg","V charactor")
 
 
